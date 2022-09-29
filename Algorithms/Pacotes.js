@@ -8,7 +8,7 @@ const {
         packageRaraCapacity,
         probabilities,
         indices
-    } = require("../Configurations/GeracaoDePacotes");
+    } = require("../configurations/GeracaoDePacotes");
 
 // Procedimento retorna um array com os ids das figurinhas
 // sorteadas
