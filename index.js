@@ -2,26 +2,20 @@ const express = require("express")
 const app = express()
 const bodyParser = require("body-parser")
 
+// Módulo responsável por construir diretório de arquivos
+const path = require("path")
+
 const PORT = 3000;
 
-// View engine
-app.set('view engine', 'ejs')
-
-// Static
-app.use(express.static('public'))
+// Servidor de arquivos estáticos
+// Serve os arquivos do Frontend
+app.use("/", express.static(path.join(__dirname, "Frontend")))
 
 // Body parser
 app.use(bodyParser.urlencoded({extends: false}))
 app.use(bodyParser.json())
 
-app.get("/", (req, res) => {
-    res.render("index")
-})
 
 app.listen(PORT, () => {
     console.log("O servidor está rodando!")
-})
-
-app.get("/album", (req, res) => {
-    res.render("album")
 })

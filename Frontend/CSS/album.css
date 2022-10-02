@@ -1,0 +1,86 @@
+.album-container {
+    width: 100%;
+}
+
+.btn-nav-div {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.page-number {
+    padding: 0;
+    margin: 0;
+    color:royalblue;
+    font-size: 1.2em;
+    text-decoration: underline;
+}
+
+.to-pad {
+    width: 100%;
+    padding: 1em;
+}
+
+.card-cell {
+    width: 100%;
+    aspect-ratio: 9/12;
+    display: flex;
+    padding: 1em;
+    justify-content: center;
+    align-items: center;
+}
+
+.fig-missed {
+    border: lightgray dashed 0.3em;
+}
+
+.fig-missed-warn {
+    font-size: 3em;
+    padding: 0;
+    margin: 0;
+    color: lightgray;
+}
+
+.fig-to-paste {
+    border: dodgerblue dashed 0.3em;
+}
+
+.fig-to-paste-warn {
+    font-size: 3em;
+    padding: 0;
+    margin: 0;
+    color: dodgerblue;
+}
+
+.fig-to-paste:hover {
+    cursor: pointer;
+}
+
+.enclose {
+    height: 100%;
+    padding: 0;
+}
+
+.fig-filled {
+    flex-direction: column;
+    padding: 0;
+    height: 100%;
+}
+
+.fig-name {
+    padding: 0;
+    margin: 0;
+    font-size: 1.2em;
+    height: 10%;
+}
+
+.fig-img {
+    width: 100%;
+    height: 90%;
+    border: lightgray solid 0.3em;
+}
+
+.fig-filled:hover {
+    transform: scale(1.1);
+}
