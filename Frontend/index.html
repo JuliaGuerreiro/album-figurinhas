@@ -11,7 +11,8 @@
 <body>
     <div class="ES">
         <div class="login-container">
-            <h5 class="text-center">Realize o Login</h5>
+            <h5 class="text-center">Albúm de Figurinhas</h5>
+            <h6 class="text-center">Realize o Login</h6>
             <form id="login-form" class="form-box mt-4">
                 <div class="form-group">
                     <label for="Usuário">Usuário</label>
@@ -23,11 +24,13 @@
                     <input id="password-input" type="password" class="form-control"
                     placeholder="Digite sua Senha">
                 </div>
-                <p class="error-warn mt-2 text-center">Usuário ou Senha Incorretos</p>
+                <p id="warn-p" class="error-warn mt-2 text-center" hidden>Usuário ou Senha Incorretos</p>
                 <button type="submit" class="btn btn-primary mt-3 login-button">Entrar</button>
             </form>
         </div>
     </div>
 </body>
+    <script src="./JS/proxy.js"></script>
+    <script src="./JS/Login.js"></script>
     <script src="./JS/index.js"></script>
 </html>

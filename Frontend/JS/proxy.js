@@ -1,0 +1,1 @@
+const proxy = "localhost:3000"
