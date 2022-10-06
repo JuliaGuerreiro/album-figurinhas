@@ -2,6 +2,8 @@ const express = require("express")
 const app = express()
 const bodyParser = require("body-parser")
 
+const usersController = require('./users/UsersController')
+
 // Módulo responsável por construir diretório de arquivos
 const path = require("path")
 
@@ -15,6 +17,7 @@ app.use("/", express.static(path.join(__dirname, "Frontend")))
 app.use(bodyParser.urlencoded({extends: false}))
 app.use(bodyParser.json())
 
+app.use('/', usersController)
 
 app.listen(PORT, () => {
     console.log("O servidor está rodando!")
