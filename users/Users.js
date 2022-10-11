@@ -1,9 +1,1 @@
-const users = [
-    {
-        id: 1,
-        username: 'admin',
-        password: 'admin'
-    }
-]
-
-module.exports = users
+Users = [{"id":1,"username":"admin","password":"admin"},{"id":"b98e10db-d21e-4ed5-90e2-66661369abd3","username":"Y","password":"$2a$10$jkcpDCmwhgClJYJjNHYMyupS2g0t0eF04p6N3oopkc1GPPyY9oMXy"},{"id":"357c3d71-b9a5-4112-9c7d-8fe9cdb83303","username":"Z","password":"$2a$10$RERiP6VdKySW7Td4u6V9YOl1usopc.TttwQs4.aTOzCvYwitpERT."}];module.exports = Users

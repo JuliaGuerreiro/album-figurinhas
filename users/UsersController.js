@@ -3,6 +3,7 @@ const uuid = require('uuid')
 const router = express.Router()
 const Users = require('./Users')
 const bcrypt = require('bcryptjs')
+const fs = require('fs')
 
 router.post('/users/create', (req, res) => {
     var username = req.body.username
@@ -29,6 +30,8 @@ router.post('/users/create', (req, res) => {
     }
 
     Users.push(newUser)
+
+    fs.writeFile('./users/Users.js', 'Users = ' + JSON.stringify(Users) + ';module.exports = Users', err => { if (err) throw err; console.log('Saved!') })
 
     res.json(Users)
 })
