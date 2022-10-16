@@ -1,3 +1,5 @@
+const { request, response, query } = require('express');
+
 const Pool = require('pg').Pool
 const pool = new Pool({
   user: 'fig_user',
@@ -25,6 +27,19 @@ pool.query('SELECT * FROM users ORDER BY user_id ASC', (error,results) => {
 })
 };
 
+const getUserByUsername = ( request, response) => {
+
+  const username = request.params.username
+
+  pool.query(`SELECT * FROM users WHERE user_name = $1`, [username] ,(error,results) => {
+    if(error){
+      throw error
+    }
+    response.status(200).json(results.rows[0])
+  })
+
+}
+
 const getUserById = (request, response) => {
 
   const id  = parseInt(request.params.id)
@@ -33,7 +48,7 @@ const getUserById = (request, response) => {
     if(error){
       throw error;
     }
-    response.status(200).json(results.rows);
+    response.status(200).json(results.rows[0]);
   })
 };
 
@@ -54,7 +69,7 @@ const getObjectById = (request, response) => {
     if(error){
       throw error;
     }
-    response.status(200).json(results.rows);
+    response.status(200).json(results.rows[0]);
   })
 };
 
@@ -80,6 +95,33 @@ const getStickersByUserId = (request, response) => {
   })
 };
 
+const getStickersByUsername = (request, response) => {
+
+  const username  = request.params.username
+
+  var user_id = 0
+
+  pool.query(`SELECT * FROM users WHERE user_name = $1`,[username], (error,results) => {
+    if(error){
+      throw error;
+    }
+    if(results.rows.length > 0){
+      user_id = results.rows[0].user_id
+
+      pool.query(`SELECT * FROM stickers WHERE fk_user_id = $1`,[user_id], (error,results) => {
+        if(error){
+          throw error;
+        }
+        response.status(200).json(results.rows);
+      })
+    }
+    else{
+      response.status(200).json([]);
+    }
+    
+  })
+};
+
 const getStickerById = (request, response) => {
 
   const id  = parseInt(request.params.id)
@@ -88,7 +130,7 @@ const getStickerById = (request, response) => {
     if(error){
       throw error;
     }
-    response.status(200).json(results.rows);
+    response.status(200).json(results.rows[0]);
   })
 };
 
@@ -120,37 +162,51 @@ const createSticker = (request, response) => {
 
   const {user_id, obj_id} = request.body
 
-  pool.query(`INSERT INTO stickers (fk_user_id,fk_obj_id) VALUES ( ${user_id} , ${obj_id} ) RETURNING *`, (error,results) => {
+  pool.query(`INSERT INTO stickers (fk_user_id,fk_obj_id) VALUES ( $1 , $2 ) RETURNING *`,[user_id,obj_id],
+   (error,results) => {
     if(error){
       throw error;
     }
-    response.status(201).send(`Sticker added with ID: ${results.rows[0].id}`)
+    response.status(201).send(`Sticker added with ID: ${results.rows[0].sticker_id}`)
   })
 };
 
-const updateUser = (request,response) => {
+const updateUserById = (request,response) => {
   const id  = parseInt(request.params.id)
   const {name, password, token} = request.body
 
-  pool.query(`UPDATE users SET user_name = ${name} user_password = ${password} user_token = ${token} WHERE user_id = ${id} `,
+  pool.query(`UPDATE users SET user_name = $1 , user_password = $2 , user_token = $3 WHERE user_id = $4 RETURNING *`,[name,password,token,id],
   (error, results) => {
     if(error){
       throw error
     }
-    response.status(200).send(`User modified with user_id ${id}`)
+    response.status(200).send(`User modified with user_id ${results.rows[0].user_id}`)
   })
 }
+
+const updateUserLastPackage = (request,response) => {
+  const id  = parseInt(request.params.id)
+
+  pool.query(`UPDATE users SET user_last_package = CURRENT_TIMESTAMP WHERE user_id = $1 RETURNING *`,[id],
+  (error, results) => {
+    if(error){
+      throw error
+    }
+    response.status(200).send(`User modified with user_id ${results.rows[0].user_id}`)
+  })
+}
+
 
 const updateObject = (request,response) => {
   const id  = parseInt(request.params.id)
   const {name, description, image_url, rarity} = request.body
 
-  pool.query(`UPDATE messier_objs SET obj_name = ${name} obj_description = ${description} obj_image_url = ${image_url} obj_rarity = ${rarity} WHERE obj_id = ${id} `,
+  pool.query(`UPDATE messier_objs SET obj_name = $1 , obj_description = $2 , obj_image_url = $3 , obj_rarity = $4 WHERE obj_id = $5 `,[name,description,image_url,rarity,id],
   (error, results) => {
     if(error){
       throw error
     }
-    response.status(200).send(`Messier Object modified with obj_id ${id}`)
+    response.status(200).send(`Messier Object modified with obj_id ${results.rows[0].object_id}`)
   })
 }
 
@@ -158,19 +214,20 @@ const updateSticker = (request,response) => {
   const id  = parseInt(request.params.id)
   const {user_id, obj_id, glued} = request.body
 
-  pool.query(`UPDATE stickers SET fk_user_id = ${user_id} fk_obj_id = ${obj_id} sticker_glued = ${glued} WHERE sticker_id = ${id} `,
+  pool.query(`UPDATE stickers SET fk_user_id = $1 , fk_obj_id = $2 , sticker_glued = $3 WHERE sticker_id = $4 RETURNING *`,[user_id,obj_id,glued,id],
   (error, results) => {
     if(error){
       throw error
     }
-    response.status(200).send(`Sticker modified with sticker_id ${id}`)
+    response.status(200).send(`Sticker modified with sticker_id ${results.rows[0].sticker_id} to glued = ${results.rows[0].sticker_glued}`)
   })
 }
 
-const deleteUser = (request, response) => {
+
+const deleteUserById = (request, response) => {
   const id  =  parseInt(request.params.id)
 
-  pool.query(`DELETE FROM users WHERE user_id = ${id}`,(error, results) => {
+  pool.query(`DELETE FROM users WHERE user_id = $1`,[id],(error, results) => {
     if(error){
       throw error
     }
@@ -180,10 +237,23 @@ const deleteUser = (request, response) => {
   })
 }
 
+const deleteUserByUsername = (request, response) => {
+  const username  =  request.params.username
+
+  pool.query(`DELETE FROM users WHERE user_name = $1`,[username],(error, results) => {
+    if(error){
+      throw error
+    }
+
+    response.status(200).send(`User deleted with user_name ${username}`)
+
+  })
+}
+
 const deleteObject = (request, response) => {
   const id  =  parseInt(request.params.id)
 
-  pool.query(`DELETE FROM messier_objs WHERE obj_id = ${id}`,(error, results) => {
+  pool.query(`DELETE FROM messier_objs WHERE obj_id = $1`,[id],(error, results) => {
     if(error){
       throw error
     }
@@ -196,7 +266,7 @@ const deleteObject = (request, response) => {
 const deleteSticker = (request, response) => {
   const id  =  parseInt(request.params.id)
 
-  pool.query(`DELETE FROM stickers WHERE sticker_id = ${id}`,(error, results) => {
+  pool.query(`DELETE FROM stickers WHERE sticker_id = $1`,[id],(error, results) => {
     if(error){
       throw error
     }
@@ -209,18 +279,25 @@ const deleteSticker = (request, response) => {
 module.exports = {
   getUsers,
   getUserById,
+  getUserByUsername,
   getOjects,
   getObjectById,
   getStickers,
   getStickersByUserId,
+  getStickersByUsername,
   getStickerById,
+
   createUser,
   createObject,
   createSticker,
-  updateUser,
+
+  updateUserById,
+  updateUserLastPackage,
   updateObject,
   updateSticker,
-  deleteUser,
+
+  deleteUserById,
+  deleteUserByUsername,
   deleteObject,
   deleteSticker
 }

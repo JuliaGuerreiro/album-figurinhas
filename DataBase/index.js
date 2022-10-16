@@ -19,25 +19,29 @@ app.listen(port, () => {
     console.log(`App running on port ${port}.`)
   })
 
-app.get('/users',db.getUsers)
-app.get('/users/:id',db.getUserById)
-app.get('/objects',db.getOjects)
-app.get('/objects/:id',db.getObjectById)
-app.get('/stickers',db.getStickers)
-app.get('/stickers/user/id:',db.getStickersByUserId)
-app.get('/stickers/:id',db.getStickers)
+app.get('/users',db.getUsers)//testado
+app.get('/users/id/:id',db.getUserById)//testado
+app.get('/users/name/:username',db.getUserByUsername)//testado
+app.get('/objects',db.getOjects)//testado
+app.get('/objects/id/:id',db.getObjectById)//testado
+app.get('/stickers',db.getStickers)//testado
+app.get('/stickers/user_id/:id',db.getStickersByUserId)//testado
+app.get('/stickers/user_name/:username',db.getStickersByUsername)//testado
+app.get('/stickers/id/:id',db.getStickerById)//testado
 
 
-app.post('/users',db.createUser)
-app.post('/objects',db.createObject)
-app.post('/stickers',db.createSticker)
+app.post('/users',db.createUser)//testado
+app.post('/objects',db.createObject)//testado
+app.post('/stickers',db.createSticker)//testado
 
 
-app.put('/users/:id',db.updateUser)
-app.put('/objects/:id',db.updateObject)
-app.put('/stickers/:id',db.updateSticker)
+app.put('/users/id/:id',db.updateUserById)//testado
+app.put('/users/user_lp/:id',db.updateUserLastPackage)//testado
+app.put('/objects/id/:id',db.updateObject)//testado
+app.put('/stickers/id/:id',db.updateSticker)//testado
 
 
-app.delete('/users/:id',db.deleteUser)
-app.delete('/objects/:id',db.deleteObject)
-app.delete('/stickers/:id',db.deleteSticker)
+app.delete('/users/id/:id',db.deleteUserById)//testadio
+app.delete('/users/name/:username',db.deleteUserByUsername)//testado
+app.delete('/objects/id/:id',db.deleteObject)//testado
+app.delete('/stickers/id/:id',db.deleteSticker)//testado
