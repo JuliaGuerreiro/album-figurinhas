@@ -1,36 +1,32 @@
 const express = require('express')
-const uuid = require('uuid')
 const router = express.Router()
-const Users = require('./Users')
 const bcrypt = require('bcryptjs')
 
-router.post('/users/create', (req, res) => {
-    var username = req.body.username
-    var password = req.body.password
-    var confirmation = req.body.confirmation
+// Constantes do Bcrypt
+var salt = bcrypt.genSaltSync(10)
+
+// Import do banco de dados
+const BD = require("../DB/db")
+
+router.post('/users/create', async (req, res) => {
+    let username = req.body.username
+    let password = req.body.password
     
     if(!username || !password) {
         return res.status(400).json({ msg: 'Please include a username and password'})
     }
-    if(password != confirmation) {
-        return res.json({ error: 'passwords do not match' })
+    
+    let hash = bcrypt.hashSync(password, salt)
+    
+    
+    // Tentando inserir o usuário no BD
+    try {
+        let userId = await BD.createUser(username, hash, '');
+        
+        res.status(200).json({msg: "Usuário adicionado com sucesso"});
+    } catch(e) {
+        return res.status(400).json({ msg: 'Erro ao adicionar o usuário' })
     }
-    if(Users.find(user => user.username == username)) {
-        return res.json({ msg: 'Username already in use, please chose a different username' })
-    }
-
-    var salt = bcrypt.genSaltSync(10)
-    var hash = bcrypt.hashSync(password, salt)
-
-    const newUser = {
-        id: uuid.v4(),
-        username: req.body.username,
-        password: hash
-    }
-
-    Users.push(newUser)
-
-    res.json(Users)
 })
 
 module.exports = router
