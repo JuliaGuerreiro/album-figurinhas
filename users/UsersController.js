@@ -1,10 +1,14 @@
 const express = require('express')
-const uuid = require('uuid')
 const router = express.Router()
 const Users = require('./Users')
 const bcrypt = require('bcryptjs')
 const fs = require('fs')
 const jwt = require('jsonwebtoken')
+
+const BD = require('../DataBase/queries')
+
+// Variáveis Bcrypt
+var salt = bcrypt.genSaltSync(10)
 
 require('dotenv').config()
 
@@ -13,37 +17,23 @@ Vai precisar de uma rota para criar usuários, a requisição vai ser do tipo po
 Caso o usuário seja criado com sucesso, basta retornar status:OK
 Do contrário deve ser retornado que ocorreu um erro (Deve ser especificado se esse erro ocorreu porque o nome de usuário já estava em uso
 */
-router.post('/users/create', (req, res) => {
+router.post('/users/create', async (req, res) => {
     var username = req.body.username
     var password = req.body.password
-    var confirmation = req.body.confirmation
     
     if(!username || !password) {
         return res.status(400).json({ msg: 'Please include a username and password'})
     }
-    if(password != confirmation) {
-        return res.json({ error: 'passwords do not match' })
-    }
-    if(Users.find(user => user.username == username)) {
-        return res.json({ msg: 'Username already in use, please chose a different username' })
-    }
-
-    var salt = bcrypt.genSaltSync(10)
+    
     var hash = bcrypt.hashSync(password, salt)
 
-    const newUser = {
-        id: uuid.v4(),
-        username: req.body.username,
-        password: hash,
-        token: '',
-        last_pack: 0
+    try {
+        await BD.createUser(username, hash, '')
+
+        res.json({msg: "Usuário Criado com Sucesso"})
+    } catch(e) {
+        res.status(400).json({msg: "Erro ao adicionar usuário"})
     }
-
-    Users.push(newUser)
-
-    fs.writeFile('./users/Users.js', 'Users = ' + JSON.stringify(Users) + ';module.exports = Users', err => { if (err) throw err; console.log('Saved!') })
-
-    res.json(Users)
 })
 
 /*
@@ -51,31 +41,32 @@ Vai precisar de uma rota para autenticação de usuários, essa rota vai ser do 
 Caso não seja possível autenticar, ele retorna erro e caso seja possível autenticar ele retorna um token pro usuário  
 O papel desse token vai ser garantir que o usuário está logado e garantir que a requisição de um usuário é autêntica sem precisar ficar passando a senha pra todo lado.
 */
-router.post('/users/authenticate', (req, res) => {
+router.post('/users/authenticate', async (req, res) => {
     // Authenticate User
 
     const username = req.body.username
     const password = req.body.password
 
-    var user = Users.find(user => user.username == username)
+    try {
+        let result = await BD.getUserByUsername(username)
+        let user = result.rows[0]
 
-    if (user != undefined) {
-        // Validate password
-        var correct = bcrypt.compareSync(password, user.password)
+        var correct = bcrypt.compareSync(password, user.user_password)
 
         if (correct) {
             const accessToken = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET)
-            user.token = accessToken
-            fs.writeFile('./users/Users.js', 'Users = ' + JSON.stringify(Users) + ';module.exports = Users', err => { if (err) throw err; console.log('Saved!') })
-
+            // user.token = accessToken
+            // fs.writeFile('./users/Users.js', 'Users = ' + JSON.stringify(Users) + ';module.exports = Users', err => { if (err) throw err; console.log('Saved!') })
+    
             res.json({ accessToken: accessToken })
         } else {
             res.json({ msg: 'Incorrect password' })
         }
-
-    } else {
+    } catch(e) {
         return res.json({ msg: 'Username not registered' })
+        
     }
+
 })
 
 /*
