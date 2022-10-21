@@ -1,3 +1,8 @@
+.imagemCover {
+    background-image: url(fundospace.jpg);
+    background-repeat: repeat;
+}
+
 .ES {
     width: 100%;
     height: 100vh;
@@ -7,14 +12,37 @@
 }
 
 .login-container {
-    width: 250px;
+    width: 300px;
+    height: 400px;
     padding: 1em;
-    border: lightgray 1px solid;
+    position: absolute;
+    right:250px;
+    border: #FFF5EE 1px solid;
+    border-radius: 20px;
+    font-family: 'Unica One', cursive;
+    background-color: #FFF5EE;
+    align-items: center;
 }
 
 .login-button {
     display: block;
     width: 100%;
+    background-color: black;
+    border: 2px solid black;
+    border-radius: 20px;
+}
+
+.register-button {
+    display: block;
+    width: 100%;
+    background-color: black;
+    border: 2px solid black;
+    border-radius: 20px;
+}
+
+.login{
+    font-family: 'Staatliches', cursive;
+    font-size: 20px;
 }
 
 .error-warn {
@@ -22,3 +50,39 @@
     margin: 0;
     color: red;
 }
+
+.albumNome {
+	position: absolute;
+	top: 315px;
+    left: 170px;
+    font-family: 'Unica One', cursive;
+    font-size: 30px;
+    color: #FFF5EE;
+ }
+
+ .albumTitulo {
+	position: absolute;
+	top: 340px;
+    left:250px;
+    font-family: 'Staatliches', cursive;
+    font-size: 80px;
+    color: #EEE8AA;
+    text-shadow: 0.1em 0.1em 0.7em white;
+ }
+
+.cadastro{
+    position: absolute;
+    bottom: 200px;
+    right: 300px;
+    font-family: 'Unica One', cursive;
+    color: black;
+}
+
+.login-link{
+    position: absolute;
+    bottom: 200px;
+    right: 285px;
+    font-family: 'Unica One', cursive;
+    color: black;
+}
+
