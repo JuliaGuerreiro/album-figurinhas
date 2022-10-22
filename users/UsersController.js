@@ -1,8 +1,8 @@
 const express = require('express')
 const router = express.Router()
-const Users = require('./Users')
+//const Users = require('./Users')
 const bcrypt = require('bcryptjs')
-const fs = require('fs')
+//const fs = require('fs')
 const jwt = require('jsonwebtoken')
 
 const BD = require('../DataBase/queries')
@@ -30,9 +30,9 @@ router.post('/users/create', async (req, res) => {
     try {
         await BD.createUser(username, hash, '')
 
-        res.json({msg: "Usuário Criado com Sucesso"})
+        res.json({msg: "Sucess"})
     } catch(e) {
-        res.status(400).json({msg: "Erro ao adicionar usuário"})
+        res.status(400).json({msg: "Error on create user"})
     }
 })
 
@@ -74,20 +74,20 @@ Vai precisar de uma rota só pra verificar se um usuário de fato está logado,
 pra isso vai precisar de uma rota post que recebe o nome do usuário e o token,
 o BackEnd verifica no BD se o token está certo e responde Ok ou token inválido
 */
-router.post('/users/checktoken', (req, res) => {
+router.post('/users/checktoken', async (req, res) =>  {
 
     const username = req.body.username
     const token = req.body.token
+    try {
+        let result = await BD.getUserByUsername(username)
+        let user = result[0]
 
-    var user = Users.find(user => user.username == username)
-
-    if (user != undefined) {
-        if (token == user.token) {
+        if(token = user.token) {
             res.json({ msg: 'OK' })
         } else {
             res.json({ msg: 'Invalid token' })
         }
-    } else {
+    } catch (e) {
         res.json({ msg: 'Invalid user' })
     }
 })
