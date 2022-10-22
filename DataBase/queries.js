@@ -25,23 +25,17 @@ const pool = new Pool({
 // })
 // };
 
-// const getUserByUsername = ( request, response) => {
+const getUserByUsername = async (username) => {
 
-//   const username = request.params.username
+  return pool.query(`SELECT * FROM users WHERE user_name = $1`, [username])
 
-//   pool.query(`SELECT * FROM users WHERE user_name = $1`, [username] ,(error,results) => {
-//     if(error){
-//       throw error
-//     }
-//     response.status(200).json(results.rows[0])
-//   })
+}
 
-// }
+// const getUserById = (id) => {
 
-// const getUserById = (request, response) => {
+//   // const id  = parseInt(request.params.id)
 
-//   const id  = parseInt(request.params.id)
-
+//   // pool.query é uma chamada assíncrona
 //   pool.query(`SELECT * FROM users WHERE user_id = ${id}`, (error,results) => {
 //     if(error){
 //       throw error;
@@ -132,10 +126,9 @@ const pool = new Pool({
 //   })
 // };
 
-// Retorna o ID do usuário criado, ou levanta uma exceção
-const createUser = (name, password, token) => {
+const createUser = async (name, password, token) => {
 
-    return pool.query(`INSERT INTO users (user_name,user_password,user_token) VALUES ( $1 , $2 , $3 ) RETURNING *`,[name,password,token])
+  return pool.query(`INSERT INTO users (user_name,user_password,user_token) VALUES ( $1 , $2 , $3 ) RETURNING *`,[name,password,token]);
 };
 
 // const createObject = (request, response) => {
@@ -163,18 +156,11 @@ const createUser = (name, password, token) => {
 //   })
 // };
 
-// const updateUserById = (request,response) => {
-//   const id  = parseInt(request.params.id)
-//   const {name, password, token} = request.body
-
-//   pool.query(`UPDATE users SET user_name = $1 , user_password = $2 , user_token = $3 WHERE user_id = $4 RETURNING *`,[name,password,token,id],
-//   (error, results) => {
-//     if(error){
-//       throw error
-//     }
-//     response.status(200).send(`User modified with user_id ${results.rows[0].user_id}`)
-//   })
-// }
+const updateUserTokenById = (id, token) => {
+  return pool.query(
+    `UPDATE users SET user_token = $1 WHERE user_id = $2 RETURNING *`,
+  [token,id])
+}
 
 // const updateUserLastPackage = (request,response) => {
 //   const id  = parseInt(request.params.id)
@@ -271,7 +257,7 @@ const createUser = (name, password, token) => {
 module.exports = {
 //   getUsers,
 //   getUserById,
-//   getUserByUsername,
+  getUserByUsername,
 //   getOjects,
 //   getObjectById,
 //   getStickers,
@@ -283,7 +269,7 @@ module.exports = {
 //   createObject,
 //   createSticker,
 
-//   updateUserById,
+  updateUserTokenById,
 //   updateUserLastPackage,
 //   updateObject,
 //   updateSticker,
