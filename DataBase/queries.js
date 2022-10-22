@@ -27,7 +27,7 @@ const pool = new Pool({
 
 const getUserByUsername = async (username) => {
 
-  return pool.query(`SELECT * FROM users WHERE user_name = $1`, [username])
+  return pool.query(`SELECT * FROM users WHERE user_name = $1;`, [username])
 
 }
 
@@ -156,18 +156,11 @@ const createUser = async (name, password, token) => {
 //   })
 // };
 
-// const updateUserById = (request,response) => {
-//   const id  = parseInt(request.params.id)
-//   const {name, password, token} = request.body
-
-//   pool.query(`UPDATE users SET user_name = $1 , user_password = $2 , user_token = $3 WHERE user_id = $4 RETURNING *`,[name,password,token,id],
-//   (error, results) => {
-//     if(error){
-//       throw error
-//     }
-//     response.status(200).send(`User modified with user_id ${results.rows[0].user_id}`)
-//   })
-// }
+const updateUserTokenById = (id, token) => {
+  return pool.query(
+    `UPDATE users SET user_token = $1 WHERE user_id = $2 RETURNING *`,
+  [token,id])
+}
 
 // const updateUserLastPackage = (request,response) => {
 //   const id  = parseInt(request.params.id)
@@ -276,7 +269,7 @@ module.exports = {
 //   createObject,
 //   createSticker,
 
-//   updateUserById,
+  updateUserTokenById,
 //   updateUserLastPackage,
 //   updateObject,
 //   updateSticker,

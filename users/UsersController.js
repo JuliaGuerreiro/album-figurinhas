@@ -54,16 +54,18 @@ router.post('/users/authenticate', async (req, res) => {
         var correct = bcrypt.compareSync(password, user.user_password)
 
         if (correct) {
-            const accessToken = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET)
-            // user.token = accessToken
-            // fs.writeFile('./users/Users.js', 'Users = ' + JSON.stringify(Users) + ';module.exports = Users', err => { if (err) throw err; console.log('Saved!') })
+            const accessToken = jwt.sign(user.user_name, process.env.ACCESS_TOKEN_SECRET)
+
+            // Atualizando o token do usuário no Banco de Dados
+            await BD.updateUserTokenById(user.user_id, accessToken)
     
             res.status(200).json({ accessToken: accessToken })
         } else {
             res.status(400).json({ msg: 'Incorrect password' })
         }
     } catch(e) {
-        return res.status(400).json({ msg: 'Username not registered' })
+        console.log(e)
+        return res.status(400).json({ msg: 'Error while trying to autenticate' })
         
     }
 
@@ -80,9 +82,9 @@ router.post('/users/checktoken', async (req, res) =>  {
     const token = req.body.token
     try {
         let result = await BD.getUserByUsername(username)
-        let user = result[0]
+        let user = result.rows[0]
 
-        if(token = user.token) {
+        if(token == user.user_token) {
             res.status(200).json({ msg: 'OK' })
         } else {
             res.status(400).json({ msg: 'Invalid token' })

@@ -20,5 +20,5 @@ app.use(bodyParser.json())
 app.use('/', usersController)
 
 app.listen(PORT, () => {
-    console.log("O servidor está rodando!")
+    console.log(`O servidor está rodando na porta ${PORT}!`)
 })

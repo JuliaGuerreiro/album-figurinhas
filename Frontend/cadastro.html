@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css"
         integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
-    <link rel="stylesheet" href="./index.css">
+    <link rel="stylesheet" href="./CSS/index.css">
     <link href="https://fonts.googleapis.com/css2?family=Staatliches&family=Unica+One&display=swap" rel="stylesheet">
     
     <title>Álbum de Figurinhas</title>
@@ -20,19 +20,20 @@
             <h5 class="albumTitulo">Objetos de Messier</h5>                
             <div class="login-container">
                 <h6 class="login">Cadastro</h6>
-                <form id="login-form" class="form-box mt-4">
+                <form id="cadastro-form" class="form-box mt-4">
                     <div class="form-group">
                         <label for="Usuário">Usuário</label>
                         <input id="user-input" type="text" class="form-control" placeholder="Defina seu Usuário">
-                    </div>
-                    <div class="form-group">
-                        <label for="email">E-mail</label>
-                        <input id="email-input" type="email" class="form-control" placeholder="Insira seu E-mail">
                     </div>
                     <div class="form-group mt-2">
                         <label for="Senha">Senha</label>
                         <input id="password-input" type="password" class="form-control" placeholder="Crie sua Senha">
                     </div>
+                    <div class="form-group mt-2">
+                        <label for="ConfirmaSenha">Confirme Sua Senha</label>
+                        <input id="confirm-password-input" type="password" class="form-control" placeholder="Confirme Sua Senha">
+                    </div>
+                    <p id="warn-p" class="error-warn mt-2 text-center" hidden></p>
                     <button type="submit" class="btn btn-primary mt-3 register-button">Registrar</button>
                 </form>
             </div>
@@ -41,7 +42,7 @@
     </div>
 </body>
 <script src="./JS/proxy.js"></script>
-<script src="./JS/Login.js"></script>
-<script src="./JS/index.js"></script>
+<script src="./JS/request.js"></script>
+<script src="./JS/Cadastro/Cadastro.js"></script>
 
 </html>
