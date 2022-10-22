@@ -30,7 +30,7 @@ router.post('/users/create', async (req, res) => {
     try {
         await BD.createUser(username, hash, '')
 
-        res.json({msg: "Sucess"})
+        res.status(200).json({msg: "Sucess"})
     } catch(e) {
         res.status(400).json({msg: "Error on create user"})
     }
@@ -58,12 +58,12 @@ router.post('/users/authenticate', async (req, res) => {
             // user.token = accessToken
             // fs.writeFile('./users/Users.js', 'Users = ' + JSON.stringify(Users) + ';module.exports = Users', err => { if (err) throw err; console.log('Saved!') })
     
-            res.json({ accessToken: accessToken })
+            res.status(200).json({ accessToken: accessToken })
         } else {
-            res.json({ msg: 'Incorrect password' })
+            res.status(400).json({ msg: 'Incorrect password' })
         }
     } catch(e) {
-        return res.json({ msg: 'Username not registered' })
+        return res.status(400).json({ msg: 'Username not registered' })
         
     }
 
@@ -83,12 +83,12 @@ router.post('/users/checktoken', async (req, res) =>  {
         let user = result[0]
 
         if(token = user.token) {
-            res.json({ msg: 'OK' })
+            res.status(200).json({ msg: 'OK' })
         } else {
-            res.json({ msg: 'Invalid token' })
+            res.status(400).json({ msg: 'Invalid token' })
         }
     } catch (e) {
-        res.json({ msg: 'Invalid user' })
+        res.status(400).json({ msg: 'Invalid user' })
     }
 })
 
