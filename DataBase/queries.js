@@ -27,7 +27,7 @@ const pool = new Pool({
 
 const getUserByUsername = async (username) => {
 
-  return pool.query(`SELECT * FROM users WHERE user_name = $1`, [username])
+  return pool.query(`SELECT * FROM users WHERE user_name = $1;`, [username])
 
 }
 

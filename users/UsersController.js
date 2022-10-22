@@ -82,9 +82,9 @@ router.post('/users/checktoken', async (req, res) =>  {
     const token = req.body.token
     try {
         let result = await BD.getUserByUsername(username)
-        let user = result[0]
+        let user = result.rows[0]
 
-        if(token == user.token) {
+        if(token == user.user_token) {
             res.status(200).json({ msg: 'OK' })
         } else {
             res.status(400).json({ msg: 'Invalid token' })
