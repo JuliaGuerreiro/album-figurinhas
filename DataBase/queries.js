@@ -130,17 +130,10 @@ const updateUserTokenById = (id, token) => {
   [token,id])
 }
 
-// const updateUserLastPackage = (request,response) => {
-//   const id  = parseInt(request.params.id)
-
-//   pool.query(`UPDATE users SET user_last_package = CURRENT_TIMESTAMP WHERE user_id = $1 RETURNING *`,[id],
-//   (error, results) => {
-//     if(error){
-//       throw error
-//     }
-//     response.status(200).send(`User modified with user_id ${results.rows[0].user_id}`)
-//   })
-// }
+const updateUserLastPackage = async (id) => {
+  return pool.query(`UPDATE users SET user_last_package = CURRENT_TIMESTAMP WHERE user_id = $1 RETURNING *`,
+  [id])
+}
 
 
 // const updateObject = (request,response) => {
@@ -230,7 +223,7 @@ module.exports = {
   createSticker,
 
   updateUserTokenById,
-//   updateUserLastPackage,
+  updateUserLastPackage,
 //   updateObject,
   glueSticker,
 

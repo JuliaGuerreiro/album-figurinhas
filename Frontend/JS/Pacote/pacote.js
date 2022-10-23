@@ -68,6 +68,38 @@ btnPacote.addEventListener('click', async ()=> {
 
 })
 
+const enableButton = async () => {
+    try {
+        // Instanciando dados do usuário
+        let username = localStorage.getItem("username")
+        let token = localStorage.getItem("token")
+        
+        let response = await makePostRequest('/users/last_package/', {
+            username,
+            token
+        })
+
+        const {last_package} = await response.json()
+
+        let lastPackageDate = new Date(last_package)
+        let currentDate = new Date()
+
+        // Setamos a data do último pacote na página
+        if(last_package)
+            lastPackageMsg.innerHTML = `Data do Último Pacote: ${lastPackageDate.getDate()}/${lastPackageDate.getMonth() + 1}/${lastPackageDate.getFullYear()}`
+
+        if((lastPackageDate.getMonth() == currentDate.getMonth()) && 
+        (lastPackageDate.getDate() == currentDate.getDate()))
+            return;
+
+        // Habilita o botão
+        btnPacote.disabled = false
+
+    } catch(e) {
+        console.log(e)
+    }
+}
+
 sairLink.addEventListener('click', (e)=> {
     // Impede o redirecionamento
     e.preventDefault();
@@ -79,3 +111,6 @@ sairLink.addEventListener('click', (e)=> {
     // Redireciona para a página de login
     window.location.replace(`${proxy}/index.html`)
 })
+
+// Verificamos se o usuário pode fazer um request
+enableButton()

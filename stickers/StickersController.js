@@ -55,6 +55,15 @@ router.post('/stickers/package', tokenVerify, async (req, res) => {
         let allFigsResult = await BD.getObjects()
         let allFigs = allFigsResult.rows
 
+        let currentDate = new Date()
+        let lastPackageDate = new Date(user.user_last_package)
+        
+        // Verificando se o usuário pode abrir o pacote
+        if((lastPackageDate.getMonth() == currentDate.getMonth()) && 
+            (lastPackageDate.getDate() == currentDate.getDate()))
+                return res.status(400).json({msg:'Pacote Diário já Aberto'});
+
+
         // Verificamos quais figurinhas são novas e quais são repetidas
         // Repetidas são marcadas com -1
         for(let i=0; i<figs.length; i++) {
@@ -86,10 +95,13 @@ router.post('/stickers/package', tokenVerify, async (req, res) => {
             await BD.createSticker(userId, fig);
         }
 
+        // Atualizamos a data do último pacote
+        await BD.updateUserLastPackage(userId)
+
         res.status(200).json(feedback)
     } catch(e) {
         console.log(e)
-        res.status(400).json({mag:'Falha ao gerar pacote'})
+        res.status(400).json({msg:'Falha ao gerar pacote'})
     }
 })
 
