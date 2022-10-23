@@ -168,18 +168,10 @@ const updateUserTokenById = (id, token) => {
 //   })
 // }
 
-// const updateSticker = (request,response) => {
-//   const id  = parseInt(request.params.id)
-//   const {user_id, obj_id, glued} = request.body
-
-//   pool.query(`UPDATE stickers SET fk_user_id = $1 , fk_obj_id = $2 , sticker_glued = $3 WHERE sticker_id = $4 RETURNING *`,[user_id,obj_id,glued,id],
-//   (error, results) => {
-//     if(error){
-//       throw error
-//     }
-//     response.status(200).send(`Sticker modified with sticker_id ${results.rows[0].sticker_id} to glued = ${results.rows[0].sticker_glued}`)
-//   })
-// }
+const glueSticker = async (sticker_id) => {
+  return pool.query(`UPDATE stickers SET sticker_glued = TRUE WHERE sticker_id = $1 RETURNING *`,
+  [sticker_id])
+  }
 
 
 // const deleteUserById = (request, response) => {
@@ -252,7 +244,7 @@ module.exports = {
   updateUserTokenById,
 //   updateUserLastPackage,
 //   updateObject,
-//   updateSticker,
+  glueSticker,
 
 //   deleteUserById,
 //   deleteUserByUsername,
