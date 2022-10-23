@@ -94,4 +94,16 @@ router.post('/users/checktoken', async (req, res) =>  {
     }
 })
 
+router.get('/users/last_package/:username', async (req,res) => {
+    const username = req.params.username
+
+    try {
+        let user = await BD.getUserByUsername(username)
+        let lastPackage = user.rows[0].user_last_package
+        res.status(200).json({last_package : lastPackage})
+    } catch (e) {
+        
+    }
+})
+
 module.exports = router
