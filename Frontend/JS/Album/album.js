@@ -6,7 +6,7 @@ const pageNumberP = document.getElementById("page-number")
 
 // Variáveis de navegação da página
 const FIG_PER_PAGE = 12
-const MAX_PAGE = 1
+const MAX_PAGE = 2
 const FIRST_PAGE = 0
 let pageCount = 0
 

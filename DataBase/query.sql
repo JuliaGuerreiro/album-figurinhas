@@ -2,7 +2,7 @@ CREATE TABLE users (
 	user_id SERIAL not null PRIMARY KEY,
 	user_name varchar NOT NULL,
 	user_password varchar NOT NULL,
-	user_last_package TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+	user_last_package TIMESTAMP DEFAULT NULL,
 	user_token varchar,
 	UNIQUE (user_name)
 );
@@ -49,11 +49,11 @@ INSERT INTO users (user_name,user_password,user_token) VALUES ('mario_07','12wle
 INSERT INTO messier_objs (obj_name,obj_image_url,obj_rarity) VALUES ('Nebulosa do Caranguejo','http://none',2);
 INSERT INTO messier_objs (obj_name,obj_image_url,obj_rarity,obj_description) VALUES ('Aglomerado da Borboleta','http://none',6,'Aglomerado aberto');
 
-INSERT INTO stickers (user_id,obj_id) VALUES (1,1);
-INSERT INTO stickers (user_id,obj_id) VALUES (1,2);
-INSERT INTO stickers (user_id,obj_id) VALUES (2,1);
-INSERT INTO stickers (user_id,obj_id) VALUES (2,1);
-INSERT INTO stickers (user_id,obj_id) VALUES (2,2);
+INSERT INTO stickers (fk_user_id,fk_obj_id) VALUES (1,1);
+INSERT INTO stickers (fk_user_id,fk_obj_id) VALUES (1,2);
+INSERT INTO stickers (fk_user_id,fk_obj_id) VALUES (2,1);
+INSERT INTO stickers (fk_user_id,fk_obj_id) VALUES (2,1);
+INSERT INTO stickers (fk_user_id,fk_obj_id) VALUES (2,2);
 
 DROP TABLE messier_objs;
 DROP TABLE users;
@@ -64,3 +64,14 @@ DROP TABLE stickers;
 UPDATE stickers SET sticker_glued = true WHERE sticker_id = 4;
 
 DELETE FROM users WHERE user_id = 1;
+
+SELECT s.sticker_glued as colada,
+	m.obj_id as id,
+	m.obj_name as nome,
+	m.obj_image_url as img_url
+FROM 
+	stickers s
+	INNER JOIN users u ON u.user_id = s.fk_user_id
+	INNER JOIN messier_objs m ON m.obj_id = s.fk_obj_id
+WHERE
+	u.user_name = 'MATHIAS';
