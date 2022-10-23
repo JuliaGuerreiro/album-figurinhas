@@ -18,6 +18,7 @@ const packageRaraCapacity = 2;
 // pode aparecer por pacote
 
 // Probabilidades de obtenção de figurinhas
+// Lembrar de trocas as probabilidades
 const probabilities = {
     "SuperRare": 1,
     "Rare": 1,

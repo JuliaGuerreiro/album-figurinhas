@@ -44,14 +44,9 @@ const getUserByUsername = async (username) => {
 //   })
 // };
 
-// const getOjects = (request, response) => {
-//   pool.query('SELECT * FROM messier_objs ORDER BY obj_id ASC', (error,results) => {
-//     if(error){
-//       throw error;
-//     }
-//     response.status(200).json(results.rows);
-//   })
-// };
+const getObjects = () => {
+  return pool.query('SELECT obj_id as id, obj_name as name, obj_image_url as img_url FROM messier_objs ORDER BY obj_id ASC')
+};
 
 // const getObjectById = (request, response) => {
 
@@ -90,7 +85,7 @@ const getUserByUsername = async (username) => {
 const getStickersByUsername = async (username) => {
 
 
-  return pool.query(`SELECT s.sticker_glued as colada,	m.obj_id as id,	m.obj_name as nome,	m.obj_image_url as img_url FROM stickers s INNER JOIN users u ON u.user_id = s.fk_user_id	INNER JOIN messier_objs m ON m.obj_id = s.fk_obj_id WHERE u.user_name = $1;`,
+  return pool.query(`SELECT s.sticker_glued as colada,	m.obj_id as id,	m.obj_name as nome,	m.obj_image_url as img_url FROM stickers s INNER JOIN users u ON u.user_id = s.fk_user_id	INNER JOIN messier_objs m ON m.obj_id = s.fk_obj_id WHERE u.user_name = $1 ORDER BY id ASC;`,
   [username])
 };
 
@@ -223,7 +218,7 @@ module.exports = {
 //   getUsers,
 //   getUserById,
   getUserByUsername,
-//   getOjects,
+  getObjects,
 //   getObjectById,
 //   getStickers,
 //   getStickersByUser,
