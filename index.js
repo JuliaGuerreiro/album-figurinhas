@@ -3,6 +3,7 @@ const app = express()
 const bodyParser = require("body-parser")
 
 const usersController = require('./users/UsersController')
+const stickersController = require('./stickers/StickersController')
 
 // Módulo responsável por construir diretório de arquivos
 const path = require("path")
@@ -18,6 +19,7 @@ app.use(bodyParser.urlencoded({extends: false}))
 app.use(bodyParser.json())
 
 app.use('/', usersController)
+app.use('/', stickersController)
 
 app.listen(PORT, () => {
     console.log(`O servidor está rodando na porta ${PORT}!`)

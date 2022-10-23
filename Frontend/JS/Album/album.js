@@ -9,13 +9,66 @@ const sairLink = document.getElementById("sair-link")
 const FIG_PER_PAGE = 12
 const MAX_PAGE = 2
 const FIRST_PAGE = 0
+const MAX_FIG = 36
 let pageCount = 0
+
+let fig = [];
 
 // Variáveis que representam os slots de figurinhas na página
 let slots = []
 // Instanciamos as referências
 for(let i=1; i<=FIG_PER_PAGE; i++){
     slots.push(document.getElementById(`f${i}`))
+}
+
+const startAlbum = async () => {
+    // Instanciamos os dados do usuário
+    let username = localStorage.getItem("username")
+    let token = localStorage.getItem("token")
+
+    try {
+        let response = await makePostRequest('/stickers/user/', 
+        {
+            username,
+            token
+        })
+
+
+        const figsResp = await response.json()
+        parseResponse(figsResp)
+
+        // Renderiza as figurinhas
+        renderFigsPerPage(pageCount, fig)
+    } catch(e) {
+        console.log("Falha ao obter figurinhas")
+    }
+}
+
+// Traduz a resposta da API para a interface do Frontend
+const parseResponse = (figsResp) => {
+    let i = 0
+    let j = 0
+
+    for(i=0; i<MAX_FIG; i++) {
+        if(j<figsResp.length && figsResp[j].id == i) {
+            // Nesse caso o usuário tem a figurinha
+            fig.push({
+                "id": figsResp[j].id,
+                "url": `${proxy}${figsResp[j].img_url}`,
+                "colada": figsResp[j].colada,
+                "possui": true
+            })
+            j++;
+        } else {
+            // Nesse caso o usuário não tem a figurinha
+            fig.push({
+                "id": i,
+                "url": ``,
+                "colada": false,
+                "possui": false
+            })
+        }
+    }
 }
 
 // Procedimento para colar uma figurinha
@@ -130,3 +183,6 @@ sairLink.addEventListener('click', (e)=> {
     // Redireciona para a página de login
     window.location.replace(`${proxy}/index.html`)
 })
+
+// Inicializa o Álbum
+startAlbum()

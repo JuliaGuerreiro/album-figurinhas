@@ -5,6 +5,8 @@ const sairLink = document.getElementById("sair-link")
 
 const FIG_PER_PACKAGE = 6
 
+let fig = []
+
 let slots = []
 for(let i=1; i<=FIG_PER_PACKAGE; i++)
     slots.push(document.getElementById(`f${i}`))
@@ -18,14 +20,41 @@ const renderNewPackage = (figs) => {
     }
 }
 
+// Selecionando os dados necessários
+const parseResponse = (figsResponse) => {
+    for(let i=0; i<FIG_PER_PACKAGE; i++) {
+        fig.push({
+            "id": figsResponse[i].id,
+            "url": `${proxy}${figsResponse[i].img_url}`
+        })
+    }
+}
 
-btnPacote.addEventListener('click', ()=> {
+
+btnPacote.addEventListener('click', async ()=> {
     // Desabilitamos o botão de requisição de pacotes
     btnPacote.disabled = true;
     
-    // Após o request
-    
+    try {
+        // Instanciando os dados do usuário
+        let username = localStorage.getItem("username")
+        let token = localStorage.getItem("token")
+        
+        let response = await makePostRequest('/stickers/package', {
+            username,
+            token
+        });
 
+        let figsResponse = await response.json()
+
+        parseResponse(figsResponse)
+    } catch(e) {
+        console.log(e)
+        btnPacote.disabled = false
+        return;
+    }
+    
+    // Após o request
     // Atualizamos a interface com as figurinhas obtidas
     renderNewPackage(fig)
 
