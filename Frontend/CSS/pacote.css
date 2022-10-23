@@ -1,6 +1,7 @@
 .btn-div {
     width: 100%;
     padding: 1em;
+    font-family: 'Unica One', cursive;
 }
 
 .btn-pacote {
@@ -15,4 +16,11 @@
 .msg-h3 {
     padding: 0;
     margin: 0;
+}
+
+.mb-3{
+    font-family: 'Unica One', cursive;
+    color: #FFF5EE;
+    text-align: center;
+    font-size: 15px;
 }
