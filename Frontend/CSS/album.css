@@ -1,38 +1,63 @@
 body {
-    background-image: url(../imgs/fundospace.jpg);
+    background-image: url(f../imgs/fundospace.jpg);
     background-repeat: repeat;
 }
 
 .container {
+    background-color: black;
+    border-radius: 30px;
+}
+
+.pacotes{
+    position: absolute;
+    top: 8px;
+    left: 23px;
+    color: black;
+    text-decoration: none;
+}
+
+.album{
+    position: absolute;
+    top: 8px;
+    left: 27px;
+    color: black;
+    text-decoration: none;
+}
+
+.sair{
+    position: absolute;
+    top: 8px;
+    right: 35px;
+    color: black;
+    text-decoration: none;
+}
+
+.retangulo-1{
+    position: absolute;
+    top: 30px;
+    left: 200px;
+    width: 100px;
+    height: 40px;
+    padding: 1em;
+    border: #FFF5EE 1px solid;
+    border-radius: 20px;
+    font-family: 'Unica One', cursive;
     background-color: #FFF5EE;
+    align-items: center;
 }
 
-.nav-bar {
-    width: 100%;
-    height: 50px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.retangulo-2{
+    position: absolute;
+    top: 30px;
+    right: 200px;
+    width: 100px;
+    height: 40px;
+    padding: 1em;
+    border: #FFF5EE 1px solid;
+    border-radius: 20px;
+    font-family: 'Unica One', cursive;
     background-color: #FFF5EE;
-}
-
-.nav-container {
-    width: 80%;
-    height: 100%;
-    display: flex;
-    flex-direction: row;
-}
-
-.nav-list {
-    display: flex;
-    flex-direction: row;
-    list-style: none;
-    align-items: center;
-}
-
-.nav-item {
-    margin: 0.6em;
-    padding: 0.6em;
+    align-items: center
 }
 
 .div-brand {
@@ -60,14 +85,15 @@ body {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    font-family: 'Unica One', cursive;
 }
 
 .page-number {
     padding: 0;
     margin: 0;
-    color:royalblue;
     font-size: 1.2em;
-    text-decoration: underline;
+    text-decoration: none;
+    font-family: 'Staatliches', cursive;
 }
 
 .to-pad {
@@ -110,13 +136,11 @@ body {
     cursor: pointer;
 }
 
-
 .fig-filled {
     flex-direction: column;
     padding: 0;
     height: 100%;
 }
-
 
 .fig-img {
     width: 100%;
@@ -127,3 +151,20 @@ body {
 .fig-filled:hover {
     transform: scale(1.1);
 }
+
+ .text-center{
+    font-family: 'Unica One', cursive;
+    font-size: 20px;
+    color: #FFF5EE;
+ }
+
+ .albumTitulo {
+	top: 340px;
+    left:250px;
+    font-family: 'Staatliches', cursive;
+    font-size: 80px;
+    color: #EEE8AA;
+    text-shadow: 0.1em 0.1em 0.7em white;
+    text-align: center;
+ }
+
