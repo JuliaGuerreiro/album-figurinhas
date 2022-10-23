@@ -1,5 +1,5 @@
 body {
-    background-image: url(f../imgs/fundospace.jpg);
+    background-image: url(../imgs/fundospace.jpg);
     background-repeat: repeat;
 }
 
@@ -168,3 +168,6 @@ body {
     text-align: center;
  }
 
+li {
+    list-style-type: none;
+}
