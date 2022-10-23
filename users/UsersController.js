@@ -7,6 +7,8 @@ const jwt = require('jsonwebtoken')
 
 const BD = require('../DataBase/queries')
 
+const tokenVerify = require('../Middleware/Token')
+
 // Variáveis Bcrypt
 var salt = bcrypt.genSaltSync(10)
 
@@ -94,15 +96,16 @@ router.post('/users/checktoken', async (req, res) =>  {
     }
 })
 
-router.get('/users/last_package/:username', async (req,res) => {
-    const username = req.params.username
+router.post('/users/last_package/', tokenVerify, async (req,res) => {
+    const username = req.body.username
 
     try {
         let user = await BD.getUserByUsername(username)
         let lastPackage = user.rows[0].user_last_package
+        
         res.status(200).json({last_package : lastPackage})
     } catch (e) {
-        
+        res.status(400).json({msg:'Fail to Handle Request'})
     }
 })
 
