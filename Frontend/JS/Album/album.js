@@ -49,7 +49,7 @@ const parseResponse = (figsResp) => {
     let i = 0
     let j = 0
 
-    for(i=0; i<MAX_FIG; i++) {
+    for(i=1; i<=MAX_FIG; i++) {
         if(j<figsResp.length && figsResp[j].id == i) {
             // Nesse caso o usuário tem a figurinha
             fig.push({
@@ -72,9 +72,25 @@ const parseResponse = (figsResp) => {
 }
 
 // Procedimento para colar uma figurinha
-const colaFigurinha = (figId, figs) => {
-    // Faz as requisições para o backend
-    // ...
+const colaFigurinha = async (figId, figs) => {
+    // Faz a requisição para o backend
+    try {
+        // Instanciando informações do usuário
+        let username = localStorage.getItem('username')
+        let token = localStorage.getItem('token')
+
+        let response = await makePostRequest('/stickers/glue_sticker',
+        {
+            username,
+            token,
+            sticker_id:figId
+        })
+
+        console.log(await response.json())
+
+    } catch(e) {
+        console.log(e)
+    }
 
     // Id do slot
     const slotId = (figId - 1) % FIG_PER_PAGE

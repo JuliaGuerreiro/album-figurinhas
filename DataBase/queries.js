@@ -150,9 +150,9 @@ const updateUserLastPackage = async (id) => {
 // }
 
 const glueSticker = async (user_id, sticker_id) => {
-  return pool.query(`UPDATE stickers SET sticker_glued = TRUE WHERE fk_user_id = $1 AND sticker_id = $2 RETURNING *`,
-  [sticker_id])
-  }
+  return pool.query(`UPDATE stickers SET sticker_glued = TRUE WHERE fk_user_id = $1 AND fk_obj_id = $2 RETURNING *`,
+  [user_id, sticker_id])
+}
 
 
 // const deleteUserById = (request, response) => {

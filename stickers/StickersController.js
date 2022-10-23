@@ -21,14 +21,14 @@ router.post('/stickers/user/', tokenVerify, async (req, res) =>{
 
 //cola a figurinha com base no id da própria
 router.post('/stickers/glue_sticker', tokenVerify, async (req,res) => {
+  const user_name = req.body.username
+  const sticker_id = req.body.sticker_id
+  
+  try{
+        var userResult = await BD.getUserByUsername(user_name)
+        var user = userResult.rows[0]
+        const user_id = user.user_id
 
-  const user_name = req.body.user_name
-  const sticker_id = parseInt(req.body.sticker_id)
-
-    var user = BD.getUserByUsername(user_name)
-    user_id = user.user_id
-
-    try{
         await BD.glueSticker(user_id, sticker_id)
         res.status(200).json({msg : "Sticker glued"})
     } catch(e){
