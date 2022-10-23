@@ -75,7 +75,7 @@ const getUserByUsername = async (username) => {
 //   })
 // };
 
-// const getStickersByUserId = (request, response) => {
+// const getStickersByUser = (request, response) => {
 
 //   const id  = parseInt(request.params.id)
 
@@ -123,18 +123,11 @@ const createUser = async (name, password, token) => {
 //   })
 // };
 
-// const createSticker = (request, response) => {
+const createSticker = (user_id, obj_id) => {
 
-//   const {user_id, obj_id} = request.body
-
-//   pool.query(`INSERT INTO stickers (fk_user_id,fk_obj_id) VALUES ( $1 , $2 ) RETURNING *`,[user_id,obj_id],
-//    (error,results) => {
-//     if(error){
-//       throw error;
-//     }
-//     response.status(201).send(`Sticker added with ID: ${results.rows[0].sticker_id}`)
-//   })
-// };
+  return pool.query(`INSERT INTO stickers (fk_user_id,fk_obj_id) VALUES ( $1 , $2 ) RETURNING *`,
+  [user_id,obj_id])
+};
 
 const updateUserTokenById = (id, token) => {
   return pool.query(
@@ -241,13 +234,13 @@ module.exports = {
 //   getOjects,
 //   getObjectById,
 //   getStickers,
-//   getStickersByUserId,
+//   getStickersByUser,
   getStickersByUsername,
 //   getStickerById,
 
   createUser,
 //   createObject,
-//   createSticker,
+  createSticker,
 
   updateUserTokenById,
 //   updateUserLastPackage,
