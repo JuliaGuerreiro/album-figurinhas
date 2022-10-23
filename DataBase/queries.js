@@ -87,32 +87,12 @@ const getUserByUsername = async (username) => {
 //   })
 // };
 
-// const getStickersByUsername = (request, response) => {
+const getStickersByUsername = async (username) => {
 
-//   const username  = request.params.username
 
-//   var user_id = 0
-
-//   pool.query(`SELECT * FROM users WHERE user_name = $1`,[username], (error,results) => {
-//     if(error){
-//       throw error;
-//     }
-//     if(results.rows.length > 0){
-//       user_id = results.rows[0].user_id
-
-//       pool.query(`SELECT * FROM stickers WHERE fk_user_id = $1`,[user_id], (error,results) => {
-//         if(error){
-//           throw error;
-//         }
-//         response.status(200).json(results.rows);
-//       })
-//     }
-//     else{
-//       response.status(200).json([]);
-//     }
-    
-//   })
-// };
+  return pool.query(`SELECT s.sticker_glued as colada,	m.obj_id as id,	m.obj_name as nome,	m.obj_image_url as img_url FROM stickers s INNER JOIN users u ON u.user_id = s.fk_user_id	INNER JOIN messier_objs m ON m.obj_id = s.fk_obj_id WHERE u.user_name = $1;`,
+  [username])
+};
 
 // const getStickerById = (request, response) => {
 
@@ -262,7 +242,7 @@ module.exports = {
 //   getObjectById,
 //   getStickers,
 //   getStickersByUserId,
-//   getStickersByUsername,
+  getStickersByUsername,
 //   getStickerById,
 
   createUser,

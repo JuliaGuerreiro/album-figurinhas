@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
+    <link rel="stylesheet" href="./CSS/album.css" >
+    <link rel="stylesheet" href="./CSS/pacote.css">
+    <title>Pacote</title>
+</head>
+<body>
+    <nav class="nav-bar">
+        <div class="nav-container">
+            <div class="div-brand">
+                <p class="nav-brand">AF</p>
+            </div>
+            <div class="nav-list">
+                <li><a class="nav-item" href="./album.html">Albúm</a></li>
+                <li><a id="sair-link" class="nav-item" href="">Sair</a></li>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mb-4 mt-4 p-3">
+        <h1 class="text-center">Obtenha Seu Pacote Diário</h1>
+        <h5 id="last-package-msg" class="mb-3">Data do Último Pacote: _/_/_</h5>
+        <div class="btn-div">
+            <button id="btn-pacote" class="btn btn-dark btn-pacote">Abrir Pacote</button>
+        </div>
+        
+        
+        <div class="new-package mt-4" id="fig-div" hidden>
+            <hr/>
+            <h2 class="text-center">Novas Figurinhas</h2>
+            <div class="album-container mt-4">
+                <div class="row">
+                    <div class="col-sm-6 col-md-4 col-lg-2">
+                        <div class="to-pad" id="f1">
+                            <div class="card-cell fig-missed">
+                                <p class="fig-missed-warn">
+                                    1
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-md-4 col-lg-2">
+                        <div class="to-pad" id="f2">
+                            <div class="card-cell fig-missed">
+                                <p class="fig-missed-warn">
+                                    2
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-md-4 col-lg-2">
+                        <div class="to-pad" id="f3">
+                            <div class="card-cell fig-missed">
+                                <p class="fig-missed-warn">
+                                    3
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-md-4 col-lg-2">
+                        <div class="to-pad" id="f4">
+                            <div class="card-cell fig-missed">
+                                <p class="fig-missed-warn">
+                                    4
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-md-4 col-lg-2">
+                        <div class="to-pad" id="f5">
+                            <div class="card-cell fig-missed">
+                                <p class="fig-missed-warn">
+                                    5
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-md-4 col-lg-2">
+                        <div class="to-pad" id="f6">
+                            <div class="card-cell fig-missed">
+                                <p class="fig-missed-warn">
+                                    6
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="msg-div">
+                <h4 class="text-center msg-h3">Vá colar suas novas figurinhas no seu álbum!</h4>
+            </div>
+        </div>
+    </div>
+</body>
+<script src="./JS/proxy.js"></script>
+<script src="./JS/request.js"></script>
+<!-- <script src="./JS/autenticateSession.js"></script> -->
+<script src="./JS/Pacote/figurinhas.js"></script>
+<script src="./JS/FigInterface.js"></script>
+<script src="./JS/Pacote/pacote.js"></script>
+</html>
