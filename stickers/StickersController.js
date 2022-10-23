@@ -22,7 +22,7 @@ router.post('/stickers/user/', tokenVerify, async (req, res) =>{
 //cola a figurinha com base no id da própria
 router.post('/stickers/glue_sticker', tokenVerify, async (req,res) => {
 
-    const sticker_id = req.body.sticker_id
+  const sticker_id = parseInt(req.body.sticker_id)
 
     try{
         await BD.glueSticker(sticker_id)
@@ -30,6 +30,7 @@ router.post('/stickers/glue_sticker', tokenVerify, async (req,res) => {
     } catch(e){
         res.status(400).json({msg: "Sticker not found"})
     }
+
 })
 
 router.post('/stickers/package', tokenVerify, async (req, res) => {
