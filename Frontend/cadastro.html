@@ -15,28 +15,36 @@
 <body>
     <div class="imagemCover">
         <div class="ES">
-            <h5 class="albumNome">Álbum de Figurinhas</h5>
-            <h5 class="albumTitulo">Objetos de Messier</h5>                
+            <div class="titulos">
+                <h5 class="albumNome">Álbum de Figurinhas</h5>
+                <h5 class="albumTitulo">Objetos de Messier</h5>    
+            </div>               
             <div class="login-container">
-                <h6 class="login">Cadastro</h6>
-                <form id="cadastro-form" class="form-box mt-4">
-                    <div class="form-group">
-                        <label for="Usuário">Usuário</label>
-                        <input id="user-input" type="text" class="form-control" placeholder="Defina seu Usuário">
+                <div class="block-0">
+                    <div class="block-1">
+                        <h6 class="login">Cadastro</h6>
+                        <form id="cadastro-form" class="form-box mt-4">
+                            <div class="form-group">
+                                <label for="Usuário">Usuário</label>
+                                <input id="user-input" type="text" class="form-control" placeholder="Defina seu Usuário">
+                            </div>
+                            <div class="form-group mt-2">
+                                <label for="Senha">Senha</label>
+                                <input id="password-input" type="password" class="form-control" placeholder="Crie sua Senha">
+                            </div>
+                            <div class="form-group mt-2">
+                                <label for="ConfirmaSenha">Confirme Sua Senha</label>
+                                <input id="confirm-password-input" type="password" class="form-control" placeholder="Confirme Sua Senha">
+                            </div>
+                            <p id="warn-p" class="error-warn mt-2 text-center" hidden></p>
+                            <button type="submit" class="btn btn-primary mt-3 register-button">Registrar</button>
+                        </form>
                     </div>
-                    <div class="form-group mt-2">
-                        <label for="Senha">Senha</label>
-                        <input id="password-input" type="password" class="form-control" placeholder="Crie sua Senha">
-                    </div>
-                    <div class="form-group mt-2">
-                        <label for="ConfirmaSenha">Confirme Sua Senha</label>
-                        <input id="confirm-password-input" type="password" class="form-control" placeholder="Confirme Sua Senha">
-                    </div>
-                    <p id="warn-p" class="error-warn mt-2 text-center" hidden></p>
-                    <button type="submit" class="btn btn-primary mt-3 register-button">Registrar</button>
-                </form>
+                </div>
+                <div class="block-2">
+                    <a class = "cadastro" href="./index.html" target="_self">Novo por aqui? Registre-se já!</a>
+                </div>
             </div>
-            <a class = "login-link" href="index.html" target="_self">Já tem uma conta? Faça seu Login!</a>
         </div>
     </div>
 </body>
