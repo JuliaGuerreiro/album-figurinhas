@@ -8,20 +8,21 @@
     height: 100vh;
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: space-evenly;
 }
+
 
 .login-container {
     width: 300px;
     height: 400px;
     padding: 1em;
-    position: absolute;
-    right:250px;
     border: #FFF5EE 1px solid;
     border-radius: 20px;
     font-family: 'Unica One', cursive;
     background-color: #FFF5EE;
-    align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
 .login-button {
@@ -52,7 +53,6 @@
 }
 
 .albumNome {
-	position: absolute;
 	top: 315px;
     left: 170px;
     font-family: 'Unica One', cursive;
@@ -61,9 +61,6 @@
  }
 
  .albumTitulo {
-	position: absolute;
-	top: 340px;
-    left:250px;
     font-family: 'Staatliches', cursive;
     font-size: 80px;
     color: #EEE8AA;
@@ -71,18 +68,29 @@
  }
 
 .cadastro{
-    position: absolute;
-    bottom: 200px;
-    right: 300px;
     font-family: 'Unica One', cursive;
     color: black;
 }
 
 .login-link{
-    position: absolute;
-    bottom: 200px;
-    right: 285px;
     font-family: 'Unica One', cursive;
     color: black;
 }
 
+.block-0 {
+    margin: 0;
+    padding: 0;
+    display: flex;
+}
+
+.block-1 {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+}
+
+.block-2 {
+    margin: 0;
+    padding: 0;
+    text-align: center;
+}
